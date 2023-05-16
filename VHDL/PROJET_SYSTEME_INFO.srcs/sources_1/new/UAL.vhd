@@ -52,28 +52,19 @@ signal result : std_logic_vector(15 downto 0);
     
     process (EntreeA, EntreeB, Ctrl)
     begin
-        if CTRL = "00" then
+        if CTRL = "000" then
             result(8 downto 0) <= ('0'& EntreeA) + ('0' & EntreeB);
-            Sortie <= result(7 downto 0);
-        elsif CTRL = "01" then
+        elsif CTRL = "001" then
             result(8 downto 0) <= ('0'& EntreeA) - ('0' & EntreeB);
-            Sortie <= result(7 downto 0);
-        elsif CTRL = "10" then
-            result(8 downto 0) <= ('0' & EntreeA) * ('0' & EntreeB);
-            Sortie <= result(7 downto 0);
+        elsif CTRL = "010" then
+            result(15 downto 0) <= (EntreeA) * (EntreeB);
         end if;
-        N <= result(7);
-        if result(7 downto 0) = "00000000" then
-            Z <= '1';
-        else
-            Z <= '0';
-        end if;
-        C <= result(8);
-        if result(15 downto 8) /= "00000000" then
-            O <= '1';
-        else
-            O <= '0';
-        end if;
-    end process;
+      end process;
+
+    Z<= '1' when  result(8 downto 0) = "000000000" else '0';
+    O <= '1' when result(15 downto 8) /= "00000000"  else '0';
+    C <= result(8);
+    N <= result(7);
+    Sortie <= result(7 downto 0);
 
 end Behavioral;

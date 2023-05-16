@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:02:38 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue May 16 10:10:54 2023
+# Process ID: 46538
+# Current directory: /home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.sim/sim_1/behav/xsim/xsim.dir/testRegistres_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/starck/Bureau/Automates -notrace

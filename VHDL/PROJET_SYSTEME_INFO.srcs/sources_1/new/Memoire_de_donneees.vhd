@@ -48,7 +48,7 @@ begin
 process (CLK)
     begin
         if rising_edge(CLK) then
-            if RST = '1' then
+            if RST = '0' then
                 memory <= (others => (others => '0'));
             elsif RW = '0' then
                 memory(to_integer(unsigned(Adresse))) <= Entree;
