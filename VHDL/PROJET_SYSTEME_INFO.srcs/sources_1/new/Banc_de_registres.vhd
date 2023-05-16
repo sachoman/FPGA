@@ -47,6 +47,10 @@ end Banc_de_registres;
 architecture Behavioral of Banc_de_registres is
   type reg_array is array(0 to 15) of std_logic_vector(7 downto 0);
   signal registers : reg_array := (others => (others => '0')); -- Tableau de registres
+  --0 -> R0 
+  --1-> R1
+  --2-> BP
+  --3 -> SP
 begin
   process (CLK)
     begin

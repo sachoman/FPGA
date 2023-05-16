@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:02:38 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Tue May 16 13:04:04 2023
+# Process ID: 10069
+# Current directory: /home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.runs/impl_1
+# Command line: vivado -log UAL.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source UAL.tcl -notrace
+# Log file: /home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.runs/impl_1/UAL.vdi
+# Journal file: /home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.runs/impl_1/vivado.jou
+#-----------------------------------------------------------
+source UAL.tcl -notrace

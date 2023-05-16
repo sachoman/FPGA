@@ -1,2 +1,4 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "/home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.srcs/sim_1/new/testDonnees.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity testDonnees
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.srcs/sources_1/new/Memoire_d_instructions.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity Memoire_d_instructions
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/starck/Bureau/Automates et Langages/FPGA/VHDL/PROJET_SYSTEME_INFO.srcs/sim_1/new/testInscructions.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity testInscructions

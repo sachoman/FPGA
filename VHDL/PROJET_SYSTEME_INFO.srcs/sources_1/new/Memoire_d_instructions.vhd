@@ -35,14 +35,13 @@ use IEEE.NUMERIC_STD.ALL;
 entity Memoire_d_instructions is
     Port ( Adresse : in STD_LOGIC_VECTOR (7 downto 0);
            CLK : in STD_LOGIC;
-           Sortie : out STD_LOGIC_VECTOR (7 downto 0));
+           Sortie : out STD_LOGIC_VECTOR (31 downto 0));
 end Memoire_d_instructions;
 
 architecture Behavioral of Memoire_d_instructions is
-    type mem_array is array(0 to 255) of std_logic_vector(7 downto 0);
+    type mem_array is array(0 to 255) of std_logic_vector(31 downto 0);
     signal memory : mem_array := (others => (others => '0'));
 begin
     Sortie <= memory(to_integer(unsigned(Adresse)));
 
 end Behavioral;
- 
