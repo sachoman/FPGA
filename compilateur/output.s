@@ -1,0 +1,80 @@
+PUSH 4
+PUSH 3
+POP r0
+POP r1
+ADD r0 r0 r1
+PUSH r0
+LOAD r0 sp-2
+PUSH r0
+LOAD r0 sp-2
+PUSH r0
+POP r0
+POP r1
+ADD r0 r0 r1
+PUSH r0
+PUSH 2
+POP r0
+POP r1
+ADD r0 r0 r1
+PUSH r0
+LOAD r0 sp-1
+PUSH r0
+POP r0
+POP r1
+ADD r0 r0 r1
+PUSH r0
+POP r0
+STORE sp-0 r0
+LOAD r0 sp-0
+PUSH r0
+POP r0
+LOAD r1 bp
+LOAD sp bp-2
+LOAD bp bp-1
+JUMP r1
+PUSH 4
+PUSH 6
+POP r0
+POP r1
+MUL r0 r0 r1
+PUSH r0
+PUSH 2
+POP r1
+POP r0
+SUB r0 r0 r1
+PUSH r0
+POP r0
+LOAD r1 bp
+LOAD sp bp-2
+LOAD bp bp-1
+JUMP r1
+PUSH 2
+PUSH sp
+PUSH bp
+PUSH 60
+PUSH sp
+POP bp
+PUSH 5
+PUSH 6
+JUMP 1
+PUSH r0
+POP r0
+STORE sp-2 r0
+LOAD r0 sp-2
+PUSH r0
+PUSH sp
+PUSH bp
+PUSH 71
+PUSH sp
+POP bp
+JUMP 35
+PUSH r0
+POP r1
+POP r0
+SUB r0 r0 r1
+PUSH r0
+POP r0
+LOAD r1 bp
+LOAD sp bp-2
+LOAD bp bp-1
+JUMP r1
