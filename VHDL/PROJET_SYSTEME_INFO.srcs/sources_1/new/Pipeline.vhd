@@ -86,13 +86,14 @@ COMPONENT Compteur
        SENS : in STD_LOGIC;
        EN : in STD_LOGIC;
        Din : in STD_LOGIC_VECTOR (7 downto 0);
-       Dout : out STD_LOGIC_VECTOR (7 downto 0));
+       Dout : out STD_LOGIC_VECTOR (7 downto 0);
+       NOPE : out STD_LOGIC);
 end Component;
 -------------------------------
 --      Signaux <=> fils     --
 -------------------------------
+signal SignalNope : std_logic := '0';
 signal SignalCLK : std_logic := '0';
-signal SignalInstruction : std_logic_vector (7 downto 0);
 signal SignalSensClock : std_logic := '1';
 signal SignalRSTClock : std_logic := '0';
 signal SignalLOADJUMP : std_logic := '0';
@@ -130,7 +131,7 @@ begin
 -------------------------------
 
 Label_instruction: Memoire_d_instructions PORT MAP (
-    Adresse => SignalInstruction,
+    Adresse => PC,
     CLK => SignalCLK,
     Sortie(31 downto 24) => pipLiOP,
     Sortie(23 downto 16) => pipLiA,
@@ -143,9 +144,10 @@ Label_compteur : Compteur PORT MAP (
     SENS => SignalSensClock,
     RST=>SignalRSTClock,
     LOAD => SignalLOADJUMP,
-    Din => SignalLOADInstruction,
+    Din => pipLiA,
     EN => ClockEN,
-    Dout => PC
+    Dout => PC,
+    NOPE => SignalNope
 );
 
 -------------------------------
@@ -157,11 +159,13 @@ SignalCLK <= not(SignalCLK);
 wait for Clock_period/2;
 end process;
 
-pipeline_process : process
-begin
-
+--etage LI / DI
 pipDiOP <= pipLiOP;
-pipDiA <= pipLiA when;
+pipDiA <= pipLiA;
+    --LC1
+    SignalLOADJUMP <= '1' when pipLiA = x"00" else '0';
+    
+
 pipDiB <= pipLiB;
 pipDiC <= pipLiC;
 
@@ -176,6 +180,5 @@ pipMemA <= pipExA;
 pipMemB <= pipExB;
 pipMemC <= pipExC;
 
-end process;
 
 end Behavioral;

@@ -23,6 +23,9 @@ void exportTable(void) {
         if (op == PUSH) {
             fprintf(f,"PUSH ");
         }
+        if (op == PUSHV) {
+            fprintf(f,"PUSHV ");
+        }
         if (op == POP) {
             fprintf(f,"POP ");
         }
@@ -34,6 +37,39 @@ void exportTable(void) {
         }
         if (op == JUMP) {
             fprintf(f,"JUMP ");
+        }
+        if (op == JUMPCOND) {
+            fprintf(f,"JUMPCOND ");
+        }
+            if (op == JUMPNOTCOND) {
+            fprintf(f,"JUMPNOTCOND ");
+        }
+                if (op == EQ) {
+            fprintf(f,"EQ ");
+        }
+                if (op == NE) {
+            fprintf(f,"NE ");
+        }
+                if (op == LT) {
+            fprintf(f,"LT ");
+        }
+                if (op == GT) {
+            fprintf(f,"GT ");
+        }
+                if (op == GE) {
+            fprintf(f,"GE ");
+        }
+                if (op == LE) {
+            fprintf(f,"LE ");
+        }
+                if (op == AND) {
+            fprintf(f,"AND ");
+        }
+                if (op == OR) {
+            fprintf(f,"OR ");
+        }
+                if (op == NOT) {
+            fprintf(f,"NOT ");
         }
         printf("opcode : %d",op);
         fputs(instructionCourante->nom,f);

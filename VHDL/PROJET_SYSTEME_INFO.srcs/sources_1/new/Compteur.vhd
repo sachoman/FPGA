@@ -39,21 +39,29 @@ entity Compteur is
            SENS : in STD_LOGIC;
            EN : in STD_LOGIC;
            Din : in STD_LOGIC_VECTOR (7 downto 0);
-           Dout : out STD_LOGIC_VECTOR (7 downto 0));
+           Dout : out STD_LOGIC_VECTOR (7 downto 0);
+           NOPE : out STD_LOGIC);
 end Compteur;
  
 architecture Behavioral of Compteur is
-signal aux : std_logic_vector (7 downto 0) := x"00";
+signal aux : std_logic_vector (7 downto 0) := x"00"; 
+signal temp : std_logic_vector (7 downto 0) := x"00";
  
 begin
     process
         begin
             wait until CLK'event and CLK='1';
-            if RST = '1' then aux <= x"00";
-                elsif LOAD='1' then aux<=Din;
-                    elsif EN='0' then  
-                        if SENS = '0' then aux<= aux+x"01"; elsif SENS='1' then aux<=aux-x"01"; end if;
-            end if;  
+            temp <= temp + x"01";
+            if temp = x"04" then
+                temp <=x"0";
+                NOPE <= '0';
+                if RST = '1' then aux <= x"00";
+                    elsif LOAD='1' then aux<=Din;
+                        elsif EN='0' then  
+                            if SENS = '0' then aux<= aux+x"01"; elsif SENS='1' then aux<=aux-x"01"; end if;
+                end if;  
+            else NOPE <= '1';
+            end if;
     end process;
     Dout <= aux;
 end Behavioral;

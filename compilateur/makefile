@@ -13,3 +13,6 @@ ts :
 test: 
 	gcc -Wall tablesymboles.c codeTable.c test.c -o test
 	./test
+
+test_binaire:
+	python3 assembleurToBinaire.py

@@ -15,7 +15,19 @@ enum opcode {
     PUSH,
     POP,
     STORE,
-    LOAD
+    LOAD,
+    GE,
+    LE,
+    AND,
+    OR,
+    NOT,
+    PUSHV,
+    JUMPCOND,
+    JUMPNOTCOND,
+    GT,
+    LT,
+    EQ,
+    NE
 };
 
 typedef struct pileWhile{

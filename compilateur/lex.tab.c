@@ -1499,7 +1499,7 @@ yyreduce:
 
   case 35:
 #line 122 "lex.y"
-                { putInstruction(JUMP, "toto"); instruction * inst  = getLastInstruction(); empile(inst); }
+                { getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPNOTCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst); }
 #line 1504 "lex.tab.c"
     break;
 
@@ -1529,13 +1529,13 @@ yyreduce:
 
   case 40:
 #line 133 "lex.y"
-                  {putInstruction(JUMP, "toto"); instruction * inst  = getLastInstruction(); empile(inst);}
+                  {getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst);}
 #line 1534 "lex.tab.c"
     break;
 
   case 41:
 #line 136 "lex.y"
-                                                               {char tmp[1024];sprintf(tmp, "%d",depile_while());putInstruction(JUMP, tmp ); depile(0);}
+                                                               {char tmp[1024];sprintf(tmp, "%d",depile_while()+1);putInstruction(JUMP, tmp ); depile(0);}
 #line 1540 "lex.tab.c"
     break;
 
@@ -1571,7 +1571,7 @@ yyreduce:
 
   case 52:
 #line 159 "lex.y"
-          {char tmp[1024];sprintf(tmp, "%d",(yyvsp[0].NUMBER)); pushTemp(); putInstruction(PUSH,tmp);}
+          {char tmp[1024];sprintf(tmp, "%d",(yyvsp[0].NUMBER)); pushTemp(); putInstruction(PUSHV,tmp);}
 #line 1576 "lex.tab.c"
     break;
 
@@ -1612,8 +1612,62 @@ yyreduce:
 #line 1613 "lex.tab.c"
     break;
 
+  case 61:
+#line 181 "lex.y"
+                              {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(EQ,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1619 "lex.tab.c"
+    break;
 
-#line 1617 "lex.tab.c"
+  case 62:
+#line 182 "lex.y"
+                                 {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(NE,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1625 "lex.tab.c"
+    break;
+
+  case 63:
+#line 183 "lex.y"
+                                 {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LT,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1631 "lex.tab.c"
+    break;
+
+  case 64:
+#line 184 "lex.y"
+                                 {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GT,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1637 "lex.tab.c"
+    break;
+
+  case 65:
+#line 185 "lex.y"
+                                 {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GE,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1643 "lex.tab.c"
+    break;
+
+  case 66:
+#line 186 "lex.y"
+                                 {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LE,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1649 "lex.tab.c"
+    break;
+
+  case 67:
+#line 187 "lex.y"
+                                {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(AND,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1655 "lex.tab.c"
+    break;
+
+  case 68:
+#line 188 "lex.y"
+                               {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(OR,"r0 r0 r1");  putInstruction(PUSH, "r0");}
+#line 1661 "lex.tab.c"
+    break;
+
+  case 69:
+#line 189 "lex.y"
+                      {getTemp(); putInstruction(POP,"r0"); putInstruction(NOT,"r0 r0");  putInstruction(PUSH, "r0");}
+#line 1667 "lex.tab.c"
+    break;
+
+
+#line 1671 "lex.tab.c"
 
       default: break;
     }
