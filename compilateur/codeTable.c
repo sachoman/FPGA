@@ -1,4 +1,5 @@
 #include "codeTable.h"
+#include "funTable.h"
 
 void exportTable(void) {
     FILE * f;
@@ -6,6 +7,14 @@ void exportTable(void) {
     instruction * instructionCourante;
     instruction * instToFree;
     instructionCourante = instructionqueue.firstInstruction;
+    fprintf(f, "JUMP ");
+    char str[1024];
+    sprintf(str,"%d",getfun("main"));
+    fputs(str,f);
+    fprintf(f,"\n");
+    instToFree = instructionCourante;
+    instructionCourante = instructionCourante->next;
+    free(instToFree);
     while(instructionCourante != NULL) {
         enum opcode op = instructionCourante->opcode;
         if (op == ADD) {
@@ -20,8 +29,11 @@ void exportTable(void) {
         if (op == SUB) {
             fprintf(f,"SUB ");
         }
-        if (op == PUSH) {
-            fprintf(f,"PUSH ");
+        if (op == PUSHR) {
+            fprintf(f,"PUSHR ");
+        }
+        if (op == PUSHSP) {
+            fprintf(f,"PUSHSP ");
         }
         if (op == PUSHV) {
             fprintf(f,"PUSHV ");
@@ -32,8 +44,11 @@ void exportTable(void) {
         if (op == STORE) {
             fprintf(f,"STORE ");
         }
-        if (op == LOAD) {
-            fprintf(f,"LOAD ");
+        if (op == LOADSP) {
+            fprintf(f,"LOADSP ");
+        }
+        if (op == LOADBP) {
+            fprintf(f,"LOADBP ");
         }
         if (op == JUMP) {
             fprintf(f,"JUMP ");

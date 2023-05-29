@@ -36,7 +36,7 @@
 %%
 
 program:
-    declaration_list
+    {putInstruction(JUMP, "toto");}declaration_list
     ;
 
 body:
@@ -71,9 +71,9 @@ return_statement:
         char tmp[1024];
         getTemp();
         putInstruction(POP, "r0");
-        putInstruction(LOAD,"r1 bp");
-        putInstruction(LOAD,"sp bp-2");
-        putInstruction(LOAD,"bp bp-1");
+        putInstruction(LOADBP,"r1 bp");
+        putInstruction(LOADBP,"sp bp-2");
+        putInstruction(LOADBP,"bp bp-1");
         putInstruction(JUMP,"r1");
     }
     ;
@@ -119,7 +119,7 @@ print_statement:
     tPRINT tLPAREN expression tRPAREN tSEMI
     ;
 
-if_jmp : %empty { getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPNOTCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst); };
+if_jmp : %empty { getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPNOTCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst); printf("apres if jump \n");};
 
 else_jmp: %empty { depile(1); putInstruction(JUMP, "toto"); instruction * inst  = getLastInstruction(); empile(inst); }; 
 
@@ -133,7 +133,20 @@ while_loop: %empty {empile_while();}
 while_jmp: %empty {getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst);}
 
 while_statement:
-    tWHILE while_loop tLPAREN condition tRPAREN while_jmp body {char tmp[1024];sprintf(tmp, "%d",depile_while()+1);putInstruction(JUMP, tmp ); depile(0);}
+    tWHILE while_loop tLPAREN condition tRPAREN while_jmp {
+        putInstruction(PUSHSP, "sp"); pushTemp(); 
+        putInstruction(PUSHR,"bp"); pushTemp();
+        putInstruction(PUSHSP, "sp"); putInstruction(POP, "bp");
+    } 
+    body {
+        getTemp();getTemp();
+        putInstruction(LOADBP,"sp bp-1");
+        putInstruction(LOADBP,"bp bp");
+        char tmp[1024];
+        sprintf(tmp, "%d",depile_while()+1);
+        putInstruction(JUMP, tmp ); 
+        depile(0);
+        }
     ;
 
 int_declaration_statement:
@@ -146,29 +159,29 @@ int_declaration_list:
     ;
 
 int_declaration:
-    tID {push($1,0,"int"); putInstruction(PUSH,"0");}
+    tID {push($1,0,"int"); putInstruction(PUSHV,"0");}
     | declaration_affectation
     ;
 
 expression:
-    expression tADD expression {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(ADD,"r0 r0 r1"); putInstruction(PUSH, "r0");}
-    | expression tSUB expression {getTemp(); putInstruction(POP,"r1");  putInstruction(POP,"r0"); putInstruction(SUB,"r0 r0 r1"); putInstruction(PUSH, "r0");}
-    | expression tMUL expression {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(MUL,"r0 r0 r1"); putInstruction(PUSH, "r0");}
-    | expression tDIV expression {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(DIV,"r0 r0 r1"); putInstruction(PUSH, "r0");}
+    expression tADD expression {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(ADD,"r0 r0 r1"); putInstruction(PUSHR, "r0");}
+    | expression tSUB expression {getTemp(); putInstruction(POP,"r1");  putInstruction(POP,"r0"); putInstruction(SUB,"r0 r0 r1"); putInstruction(PUSHR, "r0");}
+    | expression tMUL expression {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(MUL,"r0 r0 r1"); putInstruction(PUSHR, "r0");}
+    | expression tDIV expression {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(DIV,"r0 r0 r1"); putInstruction(PUSHR, "r0");}
     | tLPAREN expression tRPAREN
     | tNB {char tmp[1024];sprintf(tmp, "%d",$1); pushTemp(); putInstruction(PUSHV,tmp);}
-    | tID { char tmp[1024]; sprintf(tmp, "r0 sp-%d",get($1)); putInstruction(LOAD,tmp); pushTemp(); putInstruction(PUSH,"r0");}
-    | function {pushTemp(); putInstruction(PUSH, "r0");}
+    | tID { char tmp[1024]; sprintf(tmp, "r0 sp-%d",get($1)); putInstruction(LOADSP,tmp); pushTemp(); putInstruction(PUSHR,"r0");}
+    | function {pushTemp(); putInstruction(PUSHR, "r0");}
     ;
 
 function:
-    tID {printf("avant pb\n");} tLPAREN {  putInstruction(PUSH, "sp"); pushTemp(); 
-                                            putInstruction(PUSH,"bp"); pushTemp(); char tmp[1024]; 
-                                            putInstruction(PUSH, "fake ret"); pushTemp(); 
+    tID tLPAREN {  putInstruction(PUSHSP, "sp"); pushTemp(); 
+                                            putInstruction(PUSHR,"bp"); pushTemp(); char tmp[1024]; 
+                                            putInstruction(PUSHV, "fake ret"); pushTemp(); 
                                             instruction * inst  = getLastInstruction(); empileRet(inst); 
-                                            putInstruction(PUSH, "sp"); putInstruction(POP, "bp");
+                                            putInstruction(PUSHSP, "sp"); putInstruction(POP, "bp");                                  
         } expression_list tRPAREN {
-            char tmp[1024]; sprintf(tmp, "%d", getfun($1)); putInstruction(JUMP,tmp);  depileRet(); getTemp(); getTemp(); getTemp();
+            char tmp[1024]; sprintf(tmp, "%d", getfun($1)); putInstruction(JUMP,tmp);  depileRet(); getTemp(); getTemp(); getTemp();getTemp();
         }
     ;
 
@@ -178,16 +191,16 @@ expression_list:%empty
     ;
 
 condition:
-    expression tEQ expression {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(EQ,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | expression tNE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(NE,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | expression tLT expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LT,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | expression tGT expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GT,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | expression tGE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GE,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | expression tLE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LE,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | condition tAND condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(AND,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | condition tOR condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(OR,"r0 r0 r1");  putInstruction(PUSH, "r0");}
-    | tNOT condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(NOT,"r0 r0");  putInstruction(PUSH, "r0");}
-    | tLPAREN condition tRPAREN
+    expression
+    |expression tEQ expression {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(EQ,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tNE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(NE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tLT expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LT,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tGT expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GT,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tGE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tLE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | condition tAND condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(AND,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | condition tOR condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(OR,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | tNOT condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(NOT,"r0 r0");  putInstruction(PUSHR, "r0");}
     ;
 
 %%

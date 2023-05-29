@@ -11,8 +11,6 @@ void createFunTS(void){
     tfun.liste = NULL;
 }
 
-/*Push un élément dans la table des symboles*/
-
 void pushFun(char * nom, int ligne){
     cellFun c;
     strcpy(c.nom, nom); 
@@ -23,7 +21,7 @@ void pushFun(char * nom, int ligne){
     tfun.liste = l;
 }
 
-/*Récupère l'offset d'un élément par rapport au stack pointer dans la pile*/
+/*Récupère l'adresse de la fonction*/
 
 int getfun(char* nom){
     return getFunListe(&((&tfun)->liste), nom);
