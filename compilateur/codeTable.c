@@ -4,8 +4,6 @@
 void exportTable(void) {
     FILE * f;
     f = fopen("output.s", "w");
-    FILE * f2;
-    f2 = fopen("output","w");
     instruction * instructionCourante;
     instruction * instToFree;
     instructionCourante = instructionqueue.firstInstruction;
