@@ -68,7 +68,6 @@ int getListe(liste** l, char*nom, int offset){
             return offset;
         }
         else{
-            printf("v : %s\n",(*l)->cell.nom);
             return getListe(&((*l)->suivant), nom, offset+sizeTS((*l)->cell.type));
         }
     }

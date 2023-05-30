@@ -1,3 +1,16 @@
+JFLAGS = -g
+JC = javac
+
+.SUFFIXES: .java .class
+
+.java.class:
+        $(JC) $(JFLAGS) $*.java
+
+CLASSES = \
+        interpreteur.java \
+        hexatranslator.java \
+
+classes: $(CLASSES:.java=.class)
 
 c_parser :
 	bison -t -v -d lex.y
@@ -14,5 +27,12 @@ test:
 	gcc -Wall tablesymboles.c codeTable.c test.c -o test
 	./test
 
-test_binaire:
-	python3 assembleurToBinaire.py
+java_build: classes
+
+clean: 
+	rm *.class
+	rm output.s 
+	rm output
+	rm lex.yy.c
+	rm lex.tab.c
+	rm lex.tab.h

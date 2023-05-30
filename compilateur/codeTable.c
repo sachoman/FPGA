@@ -4,6 +4,8 @@
 void exportTable(void) {
     FILE * f;
     f = fopen("output.s", "w");
+    FILE * f2;
+    f2 = fopen("output","w");
     instruction * instructionCourante;
     instruction * instToFree;
     instructionCourante = instructionqueue.firstInstruction;
@@ -50,8 +52,14 @@ void exportTable(void) {
         if (op == LOADBP) {
             fprintf(f,"LOADBP ");
         }
+        if (op == LOADRET) {
+            fprintf(f,"LOADRET ");
+        }
         if (op == JUMP) {
             fprintf(f,"JUMP ");
+        }
+        if (op == JUMPR) {
+            fprintf(f,"JUMPR ");
         }
         if (op == JUMPCOND) {
             fprintf(f,"JUMPCOND ");
@@ -86,7 +94,6 @@ void exportTable(void) {
                 if (op == NOT) {
             fprintf(f,"NOT ");
         }
-        printf("opcode : %d",op);
         fputs(instructionCourante->nom,f);
         fprintf(f,"\n");
         instToFree = instructionCourante;
@@ -95,6 +102,9 @@ void exportTable(void) {
     }
     fclose(f);
 }
+
+
+
 
 void createInstructionQueue(void) {
     instructionqueue.nbInstructions = 0;

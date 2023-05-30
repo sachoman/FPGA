@@ -29,7 +29,9 @@ enum opcode {
     GT,
     LT,
     EQ,
-    NE
+    NE,
+    LOADRET,
+    JUMPR
 };
 
 typedef struct pileWhile{

@@ -72,9 +72,9 @@ return_statement:
         getTemp();
         putInstruction(POP, "r0");
         putInstruction(LOADBP,"r1 bp");
-        putInstruction(LOADBP,"sp bp-2");
+        putInstruction(LOADRET,"sp bp-2");
         putInstruction(LOADBP,"bp bp-1");
-        putInstruction(JUMP,"r1");
+        putInstruction(JUMPR,"r1");
     }
     ;
 
@@ -119,7 +119,7 @@ print_statement:
     tPRINT tLPAREN expression tRPAREN tSEMI
     ;
 
-if_jmp : %empty { getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPNOTCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst); printf("apres if jump \n");};
+if_jmp : %empty { getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPNOTCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst);};
 
 else_jmp: %empty { depile(1); putInstruction(JUMP, "toto"); instruction * inst  = getLastInstruction(); empile(inst); }; 
 
@@ -130,7 +130,7 @@ if_statement:
 
 while_loop: %empty {empile_while();}
 
-while_jmp: %empty {getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst);}
+while_jmp: %empty {getTemp(); putInstruction(POP,"r0"); putInstruction(JUMPNOTCOND, "toto"); instruction * inst  = getLastInstruction(); empile(inst);}
 
 while_statement:
     tWHILE while_loop tLPAREN condition tRPAREN while_jmp {
@@ -192,14 +192,14 @@ expression_list:%empty
 
 condition:
     expression
-    |expression tEQ expression {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(EQ,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
-    | expression tNE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(NE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
-    | expression tLT expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LT,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
-    | expression tGT expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GT,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
-    | expression tGE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(GE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
-    | expression tLE expression  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(LE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
-    | condition tAND condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(AND,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
-    | condition tOR condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(POP,"r1"); putInstruction(OR,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    |expression tEQ expression {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(EQ,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tNE expression  {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(NE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tLT expression  {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(LT,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tGT expression  {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(GT,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tGE expression  {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(GE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | expression tLE expression  {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(LE,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | condition tAND condition  {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(AND,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
+    | condition tOR condition  {getTemp(); putInstruction(POP,"r1"); putInstruction(POP,"r0"); putInstruction(OR,"r0 r0 r1");  putInstruction(PUSHR, "r0");}
     | tNOT condition  {getTemp(); putInstruction(POP,"r0"); putInstruction(NOT,"r0 r0");  putInstruction(PUSHR, "r0");}
     ;
 
