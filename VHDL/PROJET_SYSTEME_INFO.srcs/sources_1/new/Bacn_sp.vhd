@@ -32,37 +32,27 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Banc_de_registres is
-    Port ( EntreeA : in STD_LOGIC_VECTOR (3 downto 0);
-           EntreeB : in STD_LOGIC_VECTOR (3 downto 0);
-           EntreeW : in STD_LOGIC_VECTOR (3 downto 0);
+entity Banc_sp is
+    Port ( 
            W : in STD_LOGIC;
            DATA : in STD_LOGIC_VECTOR (7 downto 0);
            RST : in STD_LOGIC;
            CLK : in STD_LOGIC;
-           SortieA : out STD_LOGIC_VECTOR (7 downto 0);
-           SortieB : out STD_LOGIC_VECTOR (7 downto 0));
-end Banc_de_registres;
+           SortieSP : out STD_LOGIC_VECTOR (7 downto 0));
+end Banc_sp;
 
-architecture Behavioral of Banc_de_registres is
-  type reg_array is array(0 to 15) of std_logic_vector(7 downto 0);
-  signal registers : reg_array := (others => (others => '0')); -- Tableau de registres
-  --0 -> R0 / SP
-  --1-> R1 / BP
-  --2-> BP
-  --3 -> SP
+architecture Behavioral of Banc_sp is
+  signal registerSP : STD_logic_vector(7 downto 0) := (others => '0'); -- Tableau de registres
 begin
   process (CLK)
     begin
       if rising_edge(CLK) then
         if RST = '0' then
-          registers <= (others => (others => '0')); -- Remise à zéro des registres
+          registerSP <= (others => '0'); -- Remise à zéro des registres
         elsif W = '1' then
-          registers(to_integer(unsigned(EntreeW))) <= DATA;
+          registerSP <= DATA;
         end if;
       end if;
     end process;
-  SortieA <= registers(to_integer(unsigned(EntreeA)));
-  SortieB <= registers(to_integer(unsigned(EntreeB)));
-
+  SortieSP <= registerSP;
 end Behavioral;

@@ -49,15 +49,72 @@ architecture Behavioral of UAL is
 signal result : std_logic_vector(15 downto 0);
 
     begin 
-    
+    -- Code des opérations --
+    -- 01 addition
+    -- 02 soustraction
+    -- 03 multiplication
+    -- 04 egalité
+    -- 05 non-égalité
+    -- 06 and
+    -- 07 or
+    -- 08 lt
+    -- 09 gt
+    -- 0A le
+    -- 0B ge
+    -- 0C not
     process (EntreeA, EntreeB, Ctrl)
     begin
-        if CTRL = "000" then
+        if CTRL = x"01" then
             result(8 downto 0) <= ('0'& EntreeA) + ('0' & EntreeB);
-        elsif CTRL = "001" then
+        elsif CTRL = x"02" then
             result(8 downto 0) <= ('0'& EntreeA) - ('0' & EntreeB);
-        elsif CTRL = "010" then
+        elsif CTRL = x"03" then
             result(15 downto 0) <= (EntreeA) * (EntreeB);
+        elsif CTRL = x"04" then
+            if (EntreeA) = (EntreeB) then
+                result(15 downto 0) <= x"01" ;
+            else result(15 downto 0) <= x"00" ;
+            end if;
+        elsif CTRL = x"05" then
+            if (EntreeA) = (EntreeB) then
+                result(15 downto 0) <= x"00" ;
+            else result(15 downto 0) <= x"01" ;
+            end if;
+        elsif CTRL = x"06" then
+                if (EntreeA = x"01") and (EntreeB = x"01") then
+                    result(15 downto 0) <= x"01" ;
+                else result(15 downto 0) <= x"00" ;
+                end if;
+        elsif CTRL = x"07" then
+                if (EntreeA = x"01") or (EntreeB = x"01") then
+                    result(15 downto 0) <= x"01" ;
+                else result(15 downto 0) <= x"00" ;
+                end if;
+        elsif CTRL = x"08" then
+                if (EntreeA < EntreeB) then
+                    result(15 downto 0) <= x"01" ;
+                else result(15 downto 0) <= x"00" ;
+                end if;
+        elsif CTRL = x"09" then
+                if (EntreeA > EntreeB) then
+                    result(15 downto 0) <= x"01" ;
+                else result(15 downto 0) <= x"00" ;
+                end if;
+        elsif CTRL = x"0A" then
+                if (EntreeA <= EntreeB) then
+                    result(15 downto 0) <= x"01" ;
+                else result(15 downto 0) <= x"00" ;
+                end if;
+        elsif CTRL = x"0B" then
+                if (EntreeA >= EntreeB) then
+                    result(15 downto 0) <= x"01" ;
+                else result(15 downto 0) <= x"00" ;
+                end if;
+        elsif CTRL = x"0C" then
+                if (EntreeA = x"00") then
+                    result(15 downto 0) <= x"01" ;
+                else result(15 downto 0) <= x"00" ;
+                end if;
         end if;
       end process;
 
