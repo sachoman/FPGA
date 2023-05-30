@@ -8,7 +8,7 @@ ADD r0 r0 r1
 PUSHR r0
 POP r0
 LOADBP r1 bp
-LOADBP sp bp-2
+LOADret sp bp-2
 LOADBP bp bp-1
 JUMP r1
 PUSHV 15
