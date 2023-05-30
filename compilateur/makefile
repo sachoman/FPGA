@@ -1,17 +1,3 @@
-JFLAGS = -g
-JC = javac
-
-.SUFFIXES: .java .class
-
-.java.class:
-        $(JC) $(JFLAGS) $*.java
-
-CLASSES = \
-        interpreteur.java \
-        hexatranslator.java \
-
-classes: $(CLASSES:.java=.class)
-
 c_parser :
 	bison -t -v -d lex.y
 	flex lex.l
@@ -19,6 +5,9 @@ c_parser :
 
 c_test : c_parser
 	./lex < test.c
+	javac *.java
+	java interpreteur
+	java hexatranslator
 
 ts :
 	gcc -Wall tablesymboles.c -o tablesymboles
@@ -27,12 +16,24 @@ test:
 	gcc -Wall tablesymboles.c codeTable.c test.c -o test
 	./test
 
-java_build: classes
+projet : c_test
+	$(RM) *.class
+	$(RM) lex.yy.c
+	$(RM) lex.tab.c
+	$(RM) lex.tab.h
+	$(RM) lex
+	$(RM) lex.output
+	$(RM) tablesymboles
+	$(RM) test
 
 clean: 
-	rm *.class
-	rm output.s 
-	rm output
-	rm lex.yy.c
-	rm lex.tab.c
-	rm lex.tab.h
+	$(RM) *.class
+	$(RM) output.s 
+	$(RM) output
+	$(RM) lex.yy.c
+	$(RM) lex.tab.c
+	$(RM) lex.tab.h
+	$(RM) lex
+	$(RM) lex.output
+	$(RM) tablesymboles
+	$(RM) test

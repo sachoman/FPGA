@@ -217,7 +217,7 @@ public class interpreteur {
 							conti = false;
 						}
 						else {
-							index = r1-1;
+							index = r1;
 						}
 						break;
 					default :
@@ -226,7 +226,7 @@ public class interpreteur {
 							conti=false;
 						}
 						else {
-							index = i-1;
+							index = i;
 						}
 				}
 			break;
@@ -237,7 +237,7 @@ public class interpreteur {
 							conti = false;
 						}
 						else {
-							index = r1-1;
+							index = r1;
 						}
 						break;
 					default :
@@ -246,7 +246,7 @@ public class interpreteur {
 							conti=false;
 						}
 						else {
-							index = i-1;
+							index = i;
 						}
 				}
 			break;
@@ -258,7 +258,7 @@ public class interpreteur {
 								conti = false;
 							}
 							else {
-								index = r1-1;
+								index = r1;
 							}
 							break;
 						default :
@@ -267,7 +267,7 @@ public class interpreteur {
 								conti=false;
 							}
 							else {
-								index = i-1;
+								index = i;
 							}
 						}
 				}
@@ -283,7 +283,7 @@ public class interpreteur {
 								conti = false;
 							}
 							else {
-								index = r1-1;
+								index = r1;
 							}
 							break;
 						default :
@@ -292,7 +292,7 @@ public class interpreteur {
 								conti=false;
 							}
 							else {
-								index = i-1;
+								index = i;
 							}
 						}
 				}
@@ -398,14 +398,14 @@ public class interpreteur {
 		}
 	}
 	public static void main(String[] args) throws Exception  {
-		System.out.println("okay");
 		List<String> listOfStrings= new ArrayList<String>();
 		for (int i = 0; i < 256; i++) {
 			  pile.add(-1);
 			}
      // load data from file
+	 String currentPath = new java.io.File(".").getCanonicalPath();
      BufferedReader bf = new BufferedReader(
-         new FileReader("textfiles/output.s"));
+         new FileReader(currentPath+"/output.s"));
     
      // read entire line as string
      String line = bf.readLine();
@@ -424,9 +424,6 @@ public class interpreteur {
     
      // printing each line of file
      // which is stored in array
-     for (String str : array) {
-         System.out.println(str);
-     }
      String str;
         pile.add(-1);
         pile.add(-1);
@@ -436,14 +433,18 @@ public class interpreteur {
         sp = 3;
 	    while (conti) {
 	    	str = array[index];
-	    	System.out.println("\n instruction : "+index+" - "+str);
+	    	//System.out.println("\n instruction : "+index+" - "+str);
 	    	switchOP(str.split(" "));
-	    	System.out.println("sp : "+sp);
-	    	System.out.println("bp : "+bp);
-	    	System.out.println("r0 : "+r0);
-	    	System.out.println("r1 : "+r1);
-	    	System.out.println(pile);
+	    	//System.out.println("sp : "+sp);
+	    	//System.out.println("bp : "+bp);
+	    	//System.out.println("r0 : "+r0);
+	    	//System.out.println("r1 : "+r1);
+	    	//System.out.println(pile);
 	    }
-	    System.out.println(r0);
+		System.out.println("");
+		System.out.println("----------------------------");
+	    System.out.println("Résultat du programme : " + r0);
+		System.out.println("----------------------------");
+		System.out.println("");
 	}
 }

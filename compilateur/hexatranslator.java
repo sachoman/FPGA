@@ -19,8 +19,9 @@ public class hexatranslator {
     }
 	public static void main(String[] args) throws Exception  {
 	     // load data from file
+         String currentPath = new java.io.File(".").getCanonicalPath();
 	     BufferedReader bf = new BufferedReader(
-	         new FileReader("output.s"));
+	         new FileReader(currentPath+"/output.s"));
 	     List<String> listOfStrings= new ArrayList<String>();
 	     // read entire line as string
 	     String line = bf.readLine();
@@ -31,7 +32,7 @@ public class hexatranslator {
 	         line = bf.readLine();
 	     }
 	     bf.close();
-	     BufferedWriter writer = new BufferedWriter(new FileWriter("output"));
+	     BufferedWriter writer = new BufferedWriter(new FileWriter(currentPath+"/output"));
 	     
 	     // storing the data in arraylist to array
 	     String[] array = listOfStrings.toArray(new String[0]);
@@ -133,10 +134,14 @@ public class hexatranslator {
 	    		     writer.write("x\"00170102\", \n");
 	    		     break;
 	    		 default :
-	    			 System.out.println("autre");
 	    	 }
 	     }
 	     writer.close();
+         System.out.println("");
+         System.out.println("--------------------------------------------------------------------");
+         System.out.println("Cible Assembleur \"output.s\" convertie en cible hexa décimale \"output\"");
+         System.out.println("--------------------------------------------------------------------");
+         System.out.println("");
      }
 }
 

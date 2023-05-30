@@ -107,7 +107,7 @@ void exportTable(void) {
 
 
 void createInstructionQueue(void) {
-    instructionqueue.nbInstructions = 0;
+    instructionqueue.nbInstructions = -1;
     instructionqueue.lastInstruction = NULL;
     instructionqueue.firstInstruction = NULL;
 }
