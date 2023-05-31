@@ -89,13 +89,13 @@ public class hexatranslator {
 	    		     writer.write("x\"000C0001\", \n"); 
 	    		     break;
 	    		 case "POP":
-	    		     if (mot[1] == "r0"){
+	    		     if (mot[1].equals("r0")){
 	    		    	 writer.write("x\"000D0000\", \n");
 	    			 }
-	    			 else if (mot[1] == "r1"){
+	    			 else if (mot[1].equals("r1")){
 	    				 writer.write("x\"010D0000\", \n");
 	    			 }
-	    			 else if (mot[1] == "bp"){
+	    			 else if (mot[1].equals("bp")){
 	    				 writer.write("x\"020D0000\", \n");
 	    			 }
 	    		     break;
@@ -103,11 +103,11 @@ public class hexatranslator {
 	    		     writer.write("x\"000E"+getTwoDigitHexString(Integer.parseInt(mot[1]))+"00\", \n");
 	    		     break;
 	    		 case "PUSHR":
-	    			 if (mot[1] == "r1"){
+	    			 if (mot[1].equals("r0")){
 	    				 writer.write("x\"000F0000\", \n");
-	    			 }else if (mot[1] == "r1") {
+	    			 }else if (mot[1].equals("r1")) {
 	    				 writer.write("x\"010F0000\", \n");
-	    			 }else if (mot[1] == "bp") {
+	    			 }else if (mot[1].equals("bp")) {
 	    				 writer.write("x\"020F0000\", \n");
 	    			 }
 	    		     break;
@@ -115,10 +115,10 @@ public class hexatranslator {
 	    		     writer.write("x\"00100000\", \n");
 	    		     break;
 	    		 case "LOADBP":
-	    			if (mot[1] == "r1"){
+	    			if (mot[1].equals("r1")){
 	    				 writer.write("x\"01110002\", \n");
 	    			 }
-	    			 else if (mot[1] == "bp"){
+	    			 else if (mot[1].equals("bp")){
 	    				 writer.write("x\"02110102\", \n");
 	    			 }
 	    		     break;
@@ -131,9 +131,11 @@ public class hexatranslator {
 	    		     writer.write("x\""+dec2+"130000\", \n");
 	    		     break;
 	    		 case "LOADRET":
-	    		     writer.write("x\"00170102\", \n");
+				 	 String dec3 = getTwoDigitHexString(Integer.parseInt((mot[2].split("-"))[1]));
+	    		     writer.write("x\"0017"+dec3+"02\", \n");
 	    		     break;
 	    		 default :
+					 writer.write(mot[0] + "\n");
 	    	 }
 	     }
 	     writer.close();

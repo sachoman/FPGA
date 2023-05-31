@@ -140,7 +140,7 @@ while_statement:
     } 
     body {
         getTemp();getTemp();
-        putInstruction(LOADBP,"sp bp-1");
+        putInstruction(LOADRET,"sp bp-1");
         putInstruction(LOADBP,"bp bp");
         char tmp[1024];
         sprintf(tmp, "%d",depile_while()+1);

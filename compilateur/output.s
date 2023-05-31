@@ -85,7 +85,7 @@ ADD r0 r0 r1
 PUSHR r0
 POP r0
 STORE sp-3 r0
-LOADBP sp bp-1
+LOADRET sp bp-1
 LOADBP bp bp
 JUMP 27
 LOADSP r0 sp-1
