@@ -104,7 +104,7 @@ int getProf(){
 }
 
 void pushTemp(){
-    push("coucou", 0, "int");
+    push("cou cou", 0, "int");
 }
 
 void getTemp(){
