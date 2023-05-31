@@ -28,6 +28,7 @@ typedef  struct {
 //cell pop(tablesymboles);
 void createTS(void);
 void push( char *, bool, char *);
+void pushparam( char *, bool, char *);
 void profMoins();
 int get( char*);
 int getListe(liste**, char*, int);

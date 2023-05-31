@@ -95,7 +95,7 @@ parameters_i_declaration_list:
     ;
 
 parameter_declaration:
-    tINT tID {push($2, true, "int");}
+    tINT tID {pushparam($2, true, "int");}
     ;
 
 affectation_statement:
@@ -181,7 +181,7 @@ function:
                                             instruction * inst  = getLastInstruction(); empileRet(inst); 
                                             putInstruction(PUSHSP, "sp"); putInstruction(POP, "bp");                                  
         } expression_list tRPAREN {
-            char tmp[1024]; sprintf(tmp, "%d", getfun($1)); putInstruction(JUMP,tmp);  depileRet(); getTemp(); getTemp(); getTemp();getTemp();
+            char tmp[1024]; sprintf(tmp, "%d", getfun($1)); putInstruction(JUMP,tmp);  depileRet(); getTemp(); getTemp(); getTemp(); getTemp();
         }
     ;
 

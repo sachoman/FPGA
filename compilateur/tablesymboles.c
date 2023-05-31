@@ -29,6 +29,18 @@ void push(char * nom, bool init, char * type){
     l->suivant = t.liste;
     t.liste = l;
 }
+void pushparam(char * nom, bool init, char * type){
+    int prof = t.profondeurCourante+1;
+    cell c;
+    c.init = init;
+    strcpy(c.nom, nom); 
+    strcpy(c.type, type);
+    c.prof = prof;
+    liste *l = malloc(sizeof(liste));
+    l->cell = c;
+    l->suivant = t.liste;
+    t.liste = l;
+}
 
 
 
@@ -60,7 +72,7 @@ int get(char* nom){
 
 int getListe(liste** l, char*nom, int offset){
     if (*l == NULL){
-        printf("pas trouvé \n");
+        printf("Erreur de compilation : variable \"%s\" non déclarée avant affectation \n", nom);
         exit(-1);
     }
     else{

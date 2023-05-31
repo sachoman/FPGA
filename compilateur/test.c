@@ -1,8 +1,10 @@
 int g(int c){
+  int d = 0;
   return c+20;
 }
 
 int f(int a){
+  int b = g(a);
   return 2*a;
 }
 
